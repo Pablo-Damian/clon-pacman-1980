@@ -1,5 +1,1 @@
-# clon-pacman-1980
-
-<img width="636" height="362" alt="pac-man" src="https://github.com/user-attachments/assets/cbc418c3-32b4-4fd4-94ed-457c64b12dd3" />
-
-Clon del clásico juego de arcade de los 80's para jugar con el mouse
+<img width="2057" height="487" alt="pacman_logo" src="https://github.com/user-attachments/assets/7ce83f3e-27a1-4426-adc8-566896a062f2" />
