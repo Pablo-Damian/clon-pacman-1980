@@ -1,0 +1,499 @@
+@font-face {
+    font-family: 'Press Start 2P';
+    src: url('../fonts/PressStart2P-Regular.ttf') format('truetype'); /* Ruta a la fuente de letra */
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face { /* Nueva regla para PacfontGood */
+    font-family: 'PacfontGood';
+    src: url('../fonts/PacfontGood-yYye.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+}
+
+* {
+  font-family: 'Press Start 2P', sans-serif; } /* General para todo el juego */
+
+
+
+#loading-text { /* Para el texto "cargando recursos..." */
+  color: white;
+    animation: blink 0.5s infinite; /* Animación de parpadeo */
+margin-top: 90px;
+}
+
+    @keyframes blink {
+    0% { opacity: 1; }
+    50% { opacity: 0; }
+    100% { opacity: 1; }
+}
+
+#year {
+    display: block; /* Para que margin: auto funcione */
+    margin: 0 auto; /* Centra el texto */
+    font-weight: bold; /* Negrita */
+    color: #f7d60c; /* Color amarillo para los paréntesis () */
+    font-size: 28px; /* Tamaño de letra */
+}
+
+#instructions {
+    display: flex;
+    justify-content: space-between;
+    align-items: center; /* Alinea verticalmente al centro (opcional) */
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    padding: 10px;
+    /*background-color: rgba(0, 0, 0, 0.5);*/
+    z-index: 7;
+    font-size: 12px; /* Tamaño de letra */
+}
+
+#how-to-play {
+    color: #f7d60c;
+    margin-left: 10px;
+}
+
+#author {
+    color: #05bef5;
+    margin-left: auto; /* Empuja "by..." a la derecha */
+    margin-right: 20px; /* Agrega un margen derecho de 20px */
+    font-family: 'PacfontGood', sans-serif; /* Usa la nueva fuente */
+    font-size: 18px; /* Tamaño de letra */
+}
+
+.ghost {
+  margin: 0;
+  position: absolute;
+  z-index: 2; }
+
+body {
+  margin: 0;
+  overflow: hidden; }
+
+.overflow-mask {
+  background-color: #000;
+  color: #fff;
+  display: flex;
+  height: 100vh;
+  justify-content: center;
+  margin: 0;
+  overflow: hidden;
+  position: relative;
+  touch-action: manipulation; }
+
+.backdrop {
+  position: absolute;
+  visibility: hidden; }
+
+.fps-display {
+  position: absolute;
+  right: 10px;
+  top: 10px;
+  visibility: hidden; }
+
+.preload-div {
+  align-items: baseline;
+  bottom: 0;
+  display: flex;
+  flex-wrap: wrap-reverse;
+  position: absolute;
+  visibility: hidden; }
+
+.header-buttons {
+  margin: 16px;
+  position: absolute;
+  width: 100%;
+  z-index: 2; }
+  .header-buttons button {
+    display: none; /* Se ocultan los botones de 'pause' y 'sound' */
+    background: none;
+    border: 0;
+    color: #fff;
+    cursor: pointer;
+    outline: none;
+    padding: 0; }
+    .header-buttons button .material-icons {
+      font-size: 40px; }
+
+.paused-text {
+  align-items: center;
+  display: flex;
+  font-size: 50px;
+  height: 100%;
+  justify-content: center;
+  left: 0;
+  position: absolute;
+  user-select: none;
+  visibility: hidden;
+  width: 100%;
+  z-index: 1; }
+
+.game-ui {
+  display: flex;
+  flex-direction: column;
+  justify-content: center; }
+  .game-ui .one-up {
+    animation: blink .6s infinite; }
+
+@keyframes blink {
+  0% {
+    opacity: 0; }
+  49% {
+    opacity: 0; }
+  50% {
+    opacity: 1; } }
+  .game-ui .row {
+    display: flex; }
+  .game-ui .top ._25 {
+    width: 25%; }
+  .game-ui .top ._50 {
+    width: 50%; }
+  .game-ui .top .column :first-child {
+    text-align: center; }
+  .game-ui .top .column :not(:first-child) {
+    margin-right: calc(50% - 3em);
+    text-align: right; }
+  .game-ui .bottom {
+    justify-content: space-between; }
+    .game-ui .bottom .extra-lives {
+      align-items: flex-start;
+      display: flex; }
+    .game-ui .bottom .fruit-display {
+      display: flex;
+      flex-direction: row-reverse; }
+
+@media (orientation: landscape) {
+  .game-ui {
+    height: 100%; } }
+
+@media (orientation: portrait) {
+  .game-ui {
+    height: 66%; } }
+
+.loading-cover {
+  background: #000;
+  height: 100vh;
+  position: absolute;
+  top: 0;
+  width: 50vw;
+  z-index: 4; }
+
+.left {
+  left: 0;
+  transition: left 0.5s 0.5s; }
+
+.right {
+  right: 0;
+  transition: right 0.5s 0.5s; }
+
+.main-menu-container {
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  left: 0;
+  opacity: 0;
+  position: absolute;
+  transition: opacity .25s;
+  visibility: hidden;
+  width: 100%;
+  z-index: 5; }
+
+.logo {
+  height: 200px;
+  margin-top: 5vh;
+  margin-bottom: 10px; /* Agrega un margen inferior de 10px */
+ }
+
+.game-start {
+  background-color: transparent;
+  border: none;
+  border-radius: 0;
+  box-shadow: none;
+  color: #fff; /* Color de letra blanco */
+  /*cursor: pointer;*/
+  font-size: 28px;
+  outline: none;
+  padding: 16px;
+  animation: blink 1.5s infinite; /* Aplica la animación de parpadeo */ }
+/*
+  .game-start:active {
+    box-shadow: none;
+    transform: translateX(5px) translateY(5px); }
+*/
+  .game-start:disabled {
+    cursor: default; }
+
+.loading-container {
+  background-color: #000;
+  border: 5px solid #000;
+  border-radius: 10px;
+  height: 48px;
+  left: 50%;
+  position: absolute;
+  top: 50%;
+  transform: translateX(-50%) translateY(-50%);
+  transition: opacity 0.5s 1s;
+  width: 500px;
+  z-index: 5;
+  text-align: center; /* para alinear horizontalmente el texto animado "cargando recursos..." */
+}
+
+.loading-pacman {
+  animation: loading-animation 0.3s steps(4) infinite;
+  background-color: #000;
+  background-image: url("../images/spriteSheets/characters/pacman/pacman_right.png");
+  background-size: 192px;
+  border-radius: 10px;
+  height: 48px;
+  position: absolute;
+  transition: left 1s;
+  width: 48px;
+  z-index: 6; }
+
+@keyframes loading-animation {
+  100% {
+    background-position: -192px; } }
+
+.loading-dot-mask {
+  background-color: #000;
+  border-radius: 10px;
+  height: 48px;
+  left: 0;
+  position: absolute;
+  top: 0;
+  transition: width 1s;
+  z-index: -1; }
+
+.loading-dot {
+  background-image: url("../images/spriteSheets/pickups/pacdot.png");
+  height: 6px;
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 6px;
+  z-index: -2; }
+
+._5 {
+  left: 5%; }
+
+._10 {
+  left: 10%; }
+
+._15 {
+  left: 15%; }
+
+._20 {
+  left: 20%; }
+
+._25 {
+  left: 25%; }
+
+._30 {
+  left: 30%; }
+
+._35 {
+  left: 35%; }
+
+._40 {
+  left: 40%; }
+
+._45 {
+  left: 45%; }
+
+._50 {
+  left: 50%; }
+
+._55 {
+  left: 55%; }
+
+._60 {
+  left: 60%; }
+
+._65 {
+  left: 65%; }
+
+._70 {
+  left: 70%; }
+
+._75 {
+  left: 75%; }
+
+._80 {
+  left: 80%; }
+
+._85 {
+  left: 85%; }
+
+._90 {
+  left: 90%; }
+
+._95 {
+  left: 95%; }
+
+.movement-buttons {
+  align-items: center;
+  bottom: 0;
+  display: flex;
+  flex-direction: column;
+  height: 25%; /* Reducido para dar espacio a los botones laterales */
+  left: 0;
+  position: fixed;
+  width: 100%;
+}
+
+.movement-buttons .row {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 0;
+  width: 100%;
+}
+
+.movement-buttons button {
+  background: transparent;
+  border: 3px solid #fff;
+  color: #fff;
+  outline: none;
+  padding: 0;
+  user-select: none;
+  font-size: 4vh;
+  width: 6vh; /* Reducido para dar espacio a los botones laterales */
+  height: 7vh;
+  line-height: 0;
+  /* Mantenemos los bordes redondeados */
+  border-radius: 10px;
+}
+
+.movement-buttons button:active {
+  background: radial-gradient(closest-side, rgba(255, 255, 255, 0.25), transparent);
+}
+
+/* Botón de arriba */
+.movement-buttons .button-up {
+  border-bottom: 0; /* Eliminamos la línea interna inferior */
+  /* Redondeado solo arriba */
+  border-bottom-left-radius: 0;
+  border-bottom-right-radius: 0;
+}
+
+/* Botón de la izquierda */
+.movement-buttons .button-left {
+  border-right: 0;
+  margin-right: -3px;
+  border-top-right-radius: 0;
+  border-bottom-right-radius: 0;
+  width: 12vh;
+  /* Alineación de la flecha izquierda */
+  display: flex;
+  justify-content: flex-start;
+  align-items: center; /* Centrado vertical */
+  padding-left: 2vh;
+}
+
+/* Botón de la derecha */
+.movement-buttons .button-right {
+  border-left: 0;
+  margin-left: -3px;
+  border-top-left-radius: 0;
+  border-bottom-left-radius: 0;
+  width: 12vh;
+  /* Alineación de la flecha derecha */
+  display: flex;
+  justify-content: flex-end;
+  align-items: center; /* Centrado vertical */
+  padding-right: 2vh;
+}
+
+/* Botón de abajo */
+.movement-buttons .button-down {
+  border-top: 0; /* Eliminamos la línea interna superior */
+  /* Redondeado solo abajo */
+  border-top-left-radius: 0;
+  border-top-right-radius: 0;
+}
+
+/* Ajustes para mostrar líneas externas */
+.movement-buttons .row:not(:last-child) button {
+  border-bottom: 3px solid #fff; /* Restauramos las líneas externas horizontales */
+}
+
+.movement-buttons button:not(:last-child) {
+  border-right: 3px solid #fff; /* Restauramos las líneas externas verticales */
+}
+
+@media (orientation: landscape) {
+  .movement-buttons {
+    visibility: hidden; } }
+
+.error-message {
+  color: #FFFFFF;
+  opacity: 0;
+  position: absolute;
+  top: 30vh;
+  transition: opacity 0.5s;
+  visibility: hidden;
+  width: 50vw;
+  z-index: 4; }
+  .error-message .error-pacman {
+    animation: error-animation 1.5s steps(12) infinite;
+    background-image: url("../images/pacman_error.png");
+    background-size: 576px;
+    height: 48px;
+    margin-left: 10px;
+    width: 48px;
+    z-index: 6; }
+
+@keyframes error-animation {
+  100% {
+    background-position: -576px; } }
+  .error-message .header {
+    display: flex;
+    font-size: 50px;
+    margin-bottom: 30px; }
+  .error-message .body {
+    font-size: 20px;
+    line-height: 1.25; }
+
+.maze-cover {
+  background: #000;
+  height: 100%;
+  position: absolute;
+  visibility: hidden;
+  width: 100%;
+  z-index: 3; }
+
+.maze {
+  margin: 0 auto;
+  position: relative; }
+
+.maze-img {
+  position: absolute;
+  user-select: none;
+  width: 100%; }
+
+.maze-row {
+  display: flex; }
+
+.dot-container {
+  height: 100%;
+  position: absolute;
+  width: 100%; }
+
+.pacman {
+  margin: 0;
+  position: absolute;
+  z-index: 1; }
+
+.power-pellet {
+  animation: blink .3s infinite; }
+
+@keyframes blink {
+  0% {
+    opacity: 0; }
+  49% {
+    opacity: 0; }
+  50% {
+    opacity: 1; } }
